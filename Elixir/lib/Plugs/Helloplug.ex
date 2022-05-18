@@ -1,18 +1,47 @@
-defmodule Helloplug do
-  # Called once when the server is started
-  def init(default_opts) do
-    IO.puts("starting up Helloplug...")
-    default_opts
+# A Plug doesn’t need to be a router—we could use this technique to include Plugs that do authentication, DOS protection, logging, and more.
+
+defmodule Router do
+  defmacro __using__(_opts) do
+    quote do
+      def init(options) do
+        options
+      end
+
+      def call(conn, _opts) do
+        route(conn.method, conn.path_info, conn)
+      end
+    end
+  end
+end
+
+defmodule UserRouter do
+  use Router
+
+  def route("GET", ["users", user_id], conn) do
+    # this route is for /users/<user_id>
+    conn |> Plug.Conn.send_resp(200, "You requested user #{user_id}")
   end
 
-  # Called everytime a request comes in
-  def call(conn, _opts) do
-    # _opts here is the output of the init function. this doesn't change from request to request
-    IO.puts("saying hello!")
-    # connection with the client
-    conn
-    |> Plug.Conn.put_resp_header("Server", "Plug")
-    |> Plug.Conn.send_resp(200, "Hello, world!")
+  def route("POST", ["users"], conn) do
+    # do some sort of database insertion here maybe
+  end
+
+  def route(_method, _path, conn) do
+    conn |> Plug.Conn.send_resp(404, "Couldn't find that page, sorry!")
+  end
+end
+
+defmodule WebsiteRouter do
+  use Router
+  # Output from UserRouter.init([]) is stored when WebsiteRouter is compiled
+  # Compile time constant: Inserts UserRouter.init([]) output everywhere @user_router_options is used
+  @user_router_options UserRouter.init([])
+  def route("GET", ["users" | path], conn) do
+    UserRouter.call(conn, @user_router_options)
+  end
+
+  def route(_method, _path, conn) do
+    conn |> Plug.Conn.send_resp(404, "Couldn't find that page, sorry!")
   end
 end
 
