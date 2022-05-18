@@ -23,9 +23,10 @@ defmodule SimpleServer.MixProject do
   defp deps do
     [
       {:plug_cowboy, "~> 1.0.0"},
+      {:cowboy, "~> 1.0.0"},
       {:plug, "~> 1.5"},
       {:poison, "~> 3.1", override: true},
-      {:sqlite_ecto, "~> 1.0.0", override: true}
+      {:sqlite_ecto, "~> 1.0.0", override: true},
       {:ecto, "~> 1.0"}
     ]
   end
