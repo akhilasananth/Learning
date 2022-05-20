@@ -45,4 +45,15 @@ defmodule WebsiteRouter do
   end
 end
 
+defmodule BasicTemplate do
+  def route("GET", ["users", user_id], conn) do
+    # template location and map of variables we can use inside the template
+    page_contents = EEx.eval_file("templates/show_user.eex", user_id: user_id)
+
+    conn
+    |> Plug.Conn.put_resp_content_type("text/html")
+    |> Plug.Conn.send_resp(200, page_contents)
+  end
+end
+
 # In the REPL type "{:ok, _} = Plug.Adapters.Cowboy.http Helloplug, []" to connect Helloplug to cowboy
