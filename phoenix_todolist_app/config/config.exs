@@ -7,12 +7,16 @@
 # General application configuration
 import Config
 
+config :todolistapp,
+  namespace: ToDoListApp,
+  ecto_repos: [ToDoListApp.Repo]
+
 # Configures the endpoint
-config :elixir_chat, ElixirChatWeb.Endpoint,
+config :todolistapp, ToDoListAppWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: ElixirChatWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: ElixirChat.PubSub,
-  live_view: [signing_salt: "3EJQ0a+n"]
+  render_errors: [view: ToDoListAppWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: ToDoListApp.PubSub,
+  live_view: [signing_salt: "pZAkF9+6"]
 
 # Configures the mailer
 #
@@ -21,7 +25,7 @@ config :elixir_chat, ElixirChatWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :elixir_chat, ElixirChat.Mailer, adapter: Swoosh.Adapters.Local
+config :todolistapp, ToDoListApp.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false

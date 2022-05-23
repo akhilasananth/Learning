@@ -4,7 +4,7 @@ import Config
 # you can enable the server option below.
 config :elixir_chat, ElixirChatWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "Jd2gTQK5cdWa4A0wUIdYb0MntzY4rPqXauGtl/Yx+lL1Wv2eHzs3GVBdHC3pCbiK",
+  secret_key_base: "a3pg8zmILKgACWpfp3eEubwwTcuZ6aCjtVh6xuHXYHBmeMmwekTAeDT8aSz3ffas",
   server: false
 
 # In test we don't send emails.

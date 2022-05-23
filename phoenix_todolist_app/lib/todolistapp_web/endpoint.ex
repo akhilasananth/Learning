@@ -1,13 +1,13 @@
-defmodule ElixirChatWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :elixir_chat
+defmodule ToDoListAppWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :todolistapp
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_elixir_chat_key",
-    signing_salt: "YUzWEaUk"
+    key: "_todolistapp_key",
+    signing_salt: "VJogz4eM"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
@@ -18,7 +18,7 @@ defmodule ElixirChatWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :elixir_chat,
+    from: :todolistapp,
     gzip: false,
     only: ~w(assets fonts images favicon.ico robots.txt)
 
@@ -28,6 +28,7 @@ defmodule ElixirChatWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :todolistapp
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,
@@ -45,5 +46,5 @@ defmodule ElixirChatWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug ElixirChatWeb.Router
+  plug ToDoListAppWeb.Router
 end
