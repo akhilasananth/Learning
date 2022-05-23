@@ -33,6 +33,9 @@ RUN cd assets && \
     npm install
 
 # Copy all application files
+# This is at the end of the Docker file to allow 
+# docker to cache dependencies and compiled files without having 
+# to install and compile them every time
 COPY . ./
 
 # Run frontend build, compile, and digest assets
