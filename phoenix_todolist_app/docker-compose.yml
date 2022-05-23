@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  phoenix:
+    build:
+      context: .
+    env_file:
+      # To set env variables 
+      - docker.env
+    environment:
+      DATABASE_URL: ecto://postgres:postgres@db/todo_list_app
+      DATABASE_USER: postgres
+      DATABASE_PASS: password123
+      DATABASE_NAME: todo_list_app
+      DATABASE_PORT: 5432
+      DATABASE_HOST: db
+    ports:
+      - "4000:4000"
+    restart: always
+    depends_on:
+      - db
+  db:
+    image: postgres:10.12-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    volumes:
+      # This is created so that db data is persisted
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
+    # phoenix and db (PostgreSQL) to always restart with restart: always. 
+    # If the container crashes or you reboot the server these services will start 
+    # up automatically.
