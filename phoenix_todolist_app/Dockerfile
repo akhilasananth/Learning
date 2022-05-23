@@ -1,7 +1,7 @@
 # ./Dockerfile
 
 # Extend from the official Elixir image
-FROM elixir:1.10.2-alpine
+FROM elixir:1.13.4-alpine
 
 # Install required libraries on Alpine
 # note: build-base required to run mix “make” for
@@ -9,7 +9,7 @@ FROM elixir:1.10.2-alpine
 
 RUN apk update && apk upgrade && \
     apk add postgresql-client && \
-    apk add nodejs npm && \ 
+    # apk add nodejs npm && \ 
     apk add build-base && \
     rm -rf /var/cache/apk/*
 
@@ -28,9 +28,9 @@ RUN mix do deps.get --only prod
 RUN mix deps.compile
 
 # Cache and install node packages and dependencies
-COPY assets/package.json assets/
-RUN cd assets && \
-    npm install
+# COPY assets/package.json assets/
+# RUN cd assets && \
+#     npm install
 
 # Copy all application files
 # This is at the end of the Docker file to allow 
@@ -41,7 +41,7 @@ COPY . ./
 # Run frontend build, compile, and digest assets
 
 RUN cd assets/ && \
-    npm run deploy && \
+    # npm run deploy && \
     cd - && \
     mix do compile, phx.digest
 
