@@ -9,9 +9,11 @@
             </button>
         </form>
 
+        <%= for item <- @items do  %>
         <div class="item">
+
             <div class="name">
-                <p>Walk the Dog</p>
+                <p><%= item.name %>>/p>
             </div>
         </div>
 
@@ -44,5 +46,6 @@
             </div>
         </div>
 
+    <% end %>
     </div>
 </div>

@@ -18,7 +18,8 @@ defmodule ToDoListApp.Todos do
 
   """
   def list_items do
-    Repo.all(Item)
+    query = from i in Item, order_by: [desc: i.inserted_at]
+    Repo.all(query)
   end
 
   @doc """
